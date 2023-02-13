@@ -2,17 +2,17 @@ package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.Keys;
-import utils.DateUtil;
-
-import java.io.File;
-import java.util.*;
+import pages.components.CalendarComponent;
+import pages.components.RegistrationResultsModal;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class PracticeFormPage {
+
+    CalendarComponent calendarComponent = new CalendarComponent();
+    RegistrationResultsModal registrationResultModal = new RegistrationResultsModal();
 
     SelenideElement
             title = $(".practice-form-wrapper h5"),
@@ -27,10 +27,7 @@ public class PracticeFormPage {
             addressInput = $("#currentAddress"),
             stateInput = $("#state"),
             cityInput = $("#city"),
-            datePicker = $(".react-datepicker__month-container"),
-            submitButton = $("#submit"),
-            modal = $(".modal-content"),
-            table = $(".table-responsive");
+            submitButton = $("#submit");
 
     ElementsCollection
             genderInput = $$(".custom-radio");
@@ -68,12 +65,9 @@ public class PracticeFormPage {
         return this;
     }
 
-    public PracticeFormPage setBirthDateInput(Date birthDate) {
+    public PracticeFormPage setBirthDate(String day, String month, String year) {
         birthDateInput.click();
-        birthDateInput.sendKeys(Keys.CONTROL + "a");
-        birthDateInput.sendKeys(new DateUtil().getFormattedDate(birthDate));
-        birthDateInput.pressEnter();
-        datePicker.should(disappear);
+        calendarComponent.setDate(day, month, year);
         return this;
     }
 
@@ -88,7 +82,7 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage setPicture(String filePath) {
-        uploadPictureInput.uploadFile(new File(filePath));
+        uploadPictureInput.uploadFromClasspath(filePath);
         return this;
     }
 
@@ -115,12 +109,12 @@ public class PracticeFormPage {
     }
 
     public PracticeFormPage verifyModal() {
-        modal.should(appear);
+        registrationResultModal.verifyModalAppears();
         return this;
     }
 
     public PracticeFormPage verifyModalResults(String key, String value) {
-        table.$(byText(key)).parent().shouldHave(text(value));
+        registrationResultModal.verifyResult(key, value);
         return this;
     }
 }

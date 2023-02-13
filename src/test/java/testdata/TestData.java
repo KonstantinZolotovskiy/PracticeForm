@@ -9,12 +9,12 @@ import enums.city.Haryana;
 import enums.city.NCR;
 import enums.city.Rajasthan;
 import enums.city.UttarPradesh;
+import utils.DateUtil;
 import utils.EnumUtil;
-
-import java.util.Date;
 
 public class TestData {
     Faker faker = new Faker();
+    DateUtil dateUtil = new DateUtil();
 
     public String
             firstName = faker.name().firstName(),
@@ -24,14 +24,12 @@ public class TestData {
             mobileNumber = faker.phoneNumber().subscriberNumber(10),
             subject = EnumUtil.getRandomEnum(Subjects.class).getSubject(),
             hobby = EnumUtil.getRandomEnum(Hobbies.class).getHobbies(),
-            filePath = "src/test/resources/person.png",
+            filePath = "person.png",
             fileName = "person.png",
             address = faker.address().fullAddress(),
             state = EnumUtil.getRandomEnum(State.class).getState(),
             city = getCity();
-    public Date
-            birthDate = faker.date().birthday();
-
+    public String[] birthDate = dateUtil.getFormattedDate(faker.date().birthday()).split(" ");
 
     private String getCity() {
         city = null;

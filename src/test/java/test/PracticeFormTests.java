@@ -1,7 +1,6 @@
 package test;
 
 import org.junit.jupiter.api.Test;
-import utils.DateUtil;
 
 public class PracticeFormTests extends TestBase {
 
@@ -14,7 +13,7 @@ public class PracticeFormTests extends TestBase {
                 .setEmail(data.email)
                 .setGender(data.gender)
                 .setMobileNumber(data.mobileNumber)
-                .setBirthDateInput(data.birthDate)
+                .setBirthDate(data.birthDate[0], data.birthDate[1], data.birthDate[2])
                 .setSubject(data.subject)
                 .setHobbies(data.hobby)
                 .setPicture(data.filePath)
@@ -27,7 +26,7 @@ public class PracticeFormTests extends TestBase {
                 .verifyModalResults("Student Email", data.email)
                 .verifyModalResults("Gender", data.gender)
                 .verifyModalResults("Mobile", data.mobileNumber)
-                .verifyModalResults("Date of Birth", new DateUtil().getFormattedDateForCheck(data.birthDate))
+                .verifyModalResults("Date of Birth", data.birthDate[0] + " " + data.birthDate[1] + "," + data.birthDate[2])
                 .verifyModalResults("Subjects", data.subject)
                 .verifyModalResults("Hobbies", data.hobby)
                 .verifyModalResults("Picture", data.fileName)
