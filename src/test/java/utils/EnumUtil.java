@@ -2,13 +2,14 @@ package utils;
 
 import com.github.javafaker.Faker;
 
-import java.util.EnumSet;
+import java.security.SecureRandom;
 
 public class EnumUtil {
     static Faker faker = new Faker();
+    private static final SecureRandom random = new SecureRandom();
 
-    public static <T extends Enum<T>> T getRandomEnum(final Class<T> enumClass) {
-        EnumSet<T> allEnums = EnumSet.allOf(enumClass);
-        return allEnums.stream().toList().get(faker.random().nextInt(0, allEnums.size() - 1));
+    public static <T extends Enum<?>> T getRandomEnum(Class<T> clazz) {
+        int x = random.nextInt(clazz.getEnumConstants().length);
+        return clazz.getEnumConstants()[x];
     }
 }
