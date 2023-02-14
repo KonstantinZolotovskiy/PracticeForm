@@ -1,7 +1,9 @@
 package test;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+@Tag("Jenkins")
 public class PracticeFormTests extends TestBase {
 
     @Test
