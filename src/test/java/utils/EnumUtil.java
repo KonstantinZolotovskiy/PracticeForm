@@ -9,6 +9,6 @@ public class EnumUtil {
 
     public static <T extends Enum<T>> T getRandomEnum(final Class<T> enumClass) {
         EnumSet<T> allEnums = EnumSet.allOf(enumClass);
-        return (T) allEnums.stream().toList().get(faker.random().nextInt(0, allEnums.size() - 1));
+        return allEnums.stream().toList().get(faker.random().nextInt(0, allEnums.size() - 1));
     }
 }
