@@ -19,10 +19,10 @@ public class TestBase {
     @BeforeAll
     public static void setUp() {
         baseUrl = "https://demoqa.com";
-        browser = "chrome";
-        browserVersion = "100.0";
-        browserSize = "1920x1080";
-        remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
+        browser = System.getProperty("browser", "chrome");
+        browserVersion = System.getProperty("browserVersion", "100.0");
+        browserSize = System.getProperty("browserSize", "1920x1080");
+        remote = "https://user1:1234@" + System.getProperty("remote", "selenoid.autotests.cloud") + "/wd/hub";
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
@@ -36,7 +36,7 @@ public class TestBase {
     }
 
     @AfterEach()
-    public void addAttachments(){
+    public void addAttachments() {
         Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
         Attach.browserConsoleLogs();
